@@ -1,0 +1,32 @@
+# pyproject.toml — project definition.
+# Tells pip/PyCharm: this repo is an installable package living in src/,
+# what it needs (pydantic for contracts, numpy/scipy for stats),
+# and how tests run. Change deps here, then: pip install -e .[dev]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "commerce-math"
+version = "0.1.0"
+description = "Pure quantitative engine: unit economics, ad evaluation, inventory, cash."
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.7",   # typed input/output contracts (the Java<->Python language)
+    "numpy>=1.26",     # simulation arrays
+    "scipy>=1.13",     # probability distributions (Beta, etc.)
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "fastapi>=0.111",  # service wrapper (used later, harmless now)
+    "uvicorn>=0.30",   # runs the FastAPI app locally
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
